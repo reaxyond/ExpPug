@@ -1,0 +1,118 @@
+$ echo {} > package.json
+$ npm i express
+
+
+res.type('text/html;charset=UTF-8')
+res.write(()
+res.end()
+//中文字体
+
+
+app.use(express.static(path.join(__dirname, 'static')))
+app.get('./reg', (reg, res, next)=> {
+  app.sendFile(./register.html)
+})
+//使用path模块
+//express.static获取静态文件的根目录， /static/register.html
+
+
+app.use(express.json())
+app.use(express.urlencoded({extended: true}))
+var user = req.body
+//express 使用中间件解析 Content-Type 对应类型
+
+
+users.slice(-1)[0].id + 1
+// 添加更大的数字
+
+app.route('/register')
+  .get(f)
+  .post(f)
+//重复路径设置
+
+
+npm install cookie-parser --save
+const cookieParser = require('cookie-parser')
+app.use(cookieParser('randomrandomrandom'))
+//express 使用安装包设置cookie并加密
+
+document.cookie
+//浏览器中查看cookie
+req.cookies 
+req.signedCookies
+//express里获取cookies
+
+
+res.clearCookie()
+res.redirect('/')
+// 清空cookie 并重定向回首页
+
+
+<a href = '/logout?next=${req.url}'>退出</a>
+res.redirect(req.query.next)
+//利用url(解析后的req.qurey), 重定向当前页面
+//req.query对应 method GET，此时req.body undefined
+
+
+res.write(`
+    <div>
+      <a  href= '/'>首页</a>
+      ${
+        req.cookies.loginUser?
+         `<a href = '/logout?next=${req.url}'>退出</a>`
+         :
+         `<a href = '/login'>登录</a>
+          <a href = '/register'>注册</a>`
+      }
+    </div>
+  `)
+//在字符串模板里套用字符串模板
+// 分别显示登录和登出
+
+res.cookie('loginUser', loginUser.email, {
+      maxAge: 3 * 60 * 60 * 1000,
+      signed: true, 
+      
+    })
+  req.signedCookies.loginUser 
+//设置加密cookie和获取一致，注意单复数，获取cookies都为复数
+
+
+comment.postId = req.get('referer')
+//referer是 req里http开头的完整的url
+
+<input type= "hidden" name = "postId" value= ${req.params.id}>
+//相比referer，更加稳妥的是新添加请求
+//hidden type 用户不可见
+
+<textarea name="content"></textarea>
+//转换成express req.body里的 键值对， 键是content ， 值是textarea的内容
+//req.body 对应method POST， 此时req.query 为{}
+
+fetch('/post', {
+  method: 'post',
+  data: 'content=foo'
+})
+$ curl -X POST -d content=foo localhost:8006/comment
+//获取post请求的另一种方式
+
+
+res.redirect(req.get('referer'))
+//重定向到原来页面的另一种方式
+
+
+app.get('/', (req, res, next)=> {
+  var html = posts.map(post => {
+    return `<li>
+    <a href="/post/${post.id}">${post.title}</a>
+    </li>`
+  }).join('')
+//通过map获取所有的post
+
+new Date(Date.now()).toString()
+//js， 显示当前事件
+
+
+
+
+
