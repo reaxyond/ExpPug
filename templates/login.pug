@@ -1,0 +1,11 @@
+extends basic-layout.pug 
+
+block content 
+  h1 登录
+  form(action = "/login" method="post")
+    |Email:     
+    input(type="text" name= "email") 
+
+    |Password: 
+    input(input type="password" name="password")
+    button 登录

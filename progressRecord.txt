@@ -113,6 +113,36 @@ new Date(Date.now()).toString()
 //js， 显示当前事件
 
 
+//parts of using pug 
+app.set('views', path.join(__dirname, 'templates'))
+res.render('index.pug', {posts: posts})
+
+extends basic.pug 
+
+block content 
+
+  ul 
+      each post in posts 
+        li 
+          a(href="/post/" + post.id)= post.title
+
+
+
+
+ h2= post.title
+
+
+
+ p 想发表评论?试试#[a(href="/login") 登录]或#[a(href="/register") 注册]
+
+ app.locals.pretty = true
+
+
+  link(rel='stylesheet', href='/bootstrap.min.css)
+  app.use(express.static(path.join(__dirname, 'static')))
+
+
+
 
 
 

@@ -1,0 +1,7 @@
+extends basic-layout.pug 
+
+block content
+  ul 
+    each post in posts 
+      li 
+        a(href="/post/" + post.id)= post.title

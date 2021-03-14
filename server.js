@@ -4,6 +4,8 @@ const cookieParser = require('cookie-parser')
 const port = 8080
 const app = express()
 
+app.set('views', path.join(__dirname, 'templates'))
+app.locals.pretty = true
 const users = [{
   id: 1,
   email: 'a@qq.com',
@@ -58,30 +60,17 @@ app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 app.use(express.static(path.join(__dirname, 'static')))
 app.route('/register').get( (req, res, next) => {
-  res.type('text/html;charset=UTF-8')
-  res.end(`
-    <meta charset= "UTF-8" />
-    <h1>注册账号</h1>
-    <form action = "/register" method="post">
-      email: <input type="text" name= "email"/>
-      password: <input type="password" name="password"/>
-      gender: 
-      <label>
-        <input type="radio"  value= "m" />男
-      </label>
-      <label>
-        <input type="radio"  value= "f" />女
-      </label> 
-      <button>注册</button>
-    </form>
-  `)
+  res.render('register.pug', {
+    isLogin: req.signedCookies.loginUser,
+    url: req.url,
+  })
 }).post((req, res, next) => {
   var currentUser = req.body
-  currentUser.id = users.slice(-1)[0].id + 1
-  if(users.find(user => user.id == currentUser.id)){
+  if(users.find(user => user.email == currentUser.email)){
     res.type('text/html;charset=UTF-8')
     res.end('email 已被占用， 尝试登录')
   } else {
+    currentUser.id = users.slice(-1)[0].id + 1
     users.push(currentUser)
     res.type('text/html;charset=UTF-8')
     res.end('注册成功')
@@ -90,16 +79,10 @@ app.route('/register').get( (req, res, next) => {
 
 
 app.route('/login').get( (req, res, next) => {
-  res.type('text/html;charset=UTF-8')
-  res.end(`
-    <meta charset= "UTF-8" />
-    <h1>登录</h1>
-    <form action = "/login" method="post">
-      email: <input type="text" name= "email"/>
-      password: <input type="password" name="password"/>
-      <button>登录</button>
-    </form>
-  `)
+  res.render('login.pug', {
+    isLogin: req.signedCookies.loginUser,
+    url: req.url,
+  })
 }).post((req, res, next) => {
   var currentInfo = req.body
   let loginUser = users.find(user => user.email == currentInfo.email && user.password == currentInfo.password)
@@ -129,72 +112,24 @@ app.get('/logout', (req, res, next) => {
 
 
 app.get('/', (req, res, next)=> {
-  var html = posts.map(post => {
-    return `<li>
-    <a href="/post/${post.id}">${post.title}</a>
-    </li>`
-  }).join('')
-  res.type('text/html;charset=UTF-8')
-  res.write(`<div>
-      <a href= "/">首页</a>
-      ${
-        req.signedCookies.loginUser ?
-        `hi, ${req.signedCookies.loginUser}
-         <a href='/logout?next=${req.url}'>退出</a>`
-         :
-         `<a href='/login'>登录</a>
-          <a href='/register'>注册</a>`
-      }
-    </div>`)
-
-  res.end(html)
+  res.render('index.pug', {
+    posts: posts,
+    isLogin: req.signedCookies.loginUser,
+    url: req.url,
+  })
 })
 
 app.get('/post/:id', (req, res, next) => {
   var currentPost = posts.find(post => post.id == req.params.id)
   if (currentPost){
-    var currentComments = comments.filter(comment => comment.postId == currentPost.id) // post is current post
-    res.type('text/html;charset=UTF-8')
-    res.write(`
-    <div>
-      <a  href= '/'>首页</a>
-      ${
-        req.signedCookies.loginUser ?
-        `hi, ${req.signedCookies.loginUser}
-         <a href='/logout?next=${req.url}'>退出</a>`
-         :
-         `<a href='/login'>登录</a>
-          <a href='/register'>注册</a>`
-      }
-    </div>
-    `)
-    res.end(`
-      <div>
-        <h1>${currentPost.title}</h1>
-        <p>${currentPost.content}</p>
-      </div>
-      <ul>
-        ${
-          currentComments.map(comment => {
-            return `
-              <li>
-                ${comment.content} ${new Date(comment.createAt).toString()}
-              </li>
-            `
-          })
-        }
-      </ul>
-      ${
-        req.signedCookies.loginUser ?
-        `
-          <form action="/comment" method="POST">
-          <input type="hidden" name = "postId" value= ${req.params.id}>
-            <textarea name="content"></textarea>
-            <button>提交</button>
-          </form>
-        ` : ``
-      }
-    `)
+    var currentComments = comments.filter(comment => comment.postId == currentPost.id) 
+    res.render('post.pug', {
+      post: currentPost,
+      comments: currentComments,
+      isLogin: req.signedCookies.loginUser,
+      paramID: req.params.id,
+      url: req.url,
+    })
   } else {
     res.status(404).end('宁要找的主题不存在')
   }
@@ -204,9 +139,7 @@ app.get('/post/:id', (req, res, next) => {
 app.post('/comment', (req, res, next) => { 
   if (req.signedCookies.loginUser){
     var comment = req.body
-    console.log('req.body', req.body)
-    console.log('req.query', req.query)
-    
+   
     comment.userId = users.find(user => user.email == req.signedCookies.loginUser).id
     comment.id = comments.slice(-1)[0].id + 1
     comment.createAt = Date.now()

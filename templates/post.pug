@@ -1,0 +1,18 @@
+extends basic-layout.pug 
+
+block content 
+  h2= post.title
+  p= post.content
+
+  ul
+    each comment in comments 
+      li= comment.content 
+        small= new Date(comment.createAt).toString()
+
+  if isLogin
+    form(action="/comment" method='POST')
+      input(type="hidden" name="postId" value= paramID)
+      textarea(name="content" required)
+      button 提交
+  else 
+    p 想发表评论?试试#[a(href="/login") 登录]或#[a(href="/register") 注册]

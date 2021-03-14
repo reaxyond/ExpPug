@@ -1,0 +1,28 @@
+extends basic-layout.pug 
+
+block content
+  form(action='register' method='post')
+    .mb-3 
+      label.form-label(for="exampleInputEmail1") 
+      | Email address:
+      input#exampleInputEmail1.form-control(type='email' name='email' aria-describedby='emailHelp')
+      #emailHelp.form-text We will never share your email with anyone else.
+    .mb-3
+      label.form-label(for='exampleInputPassword1')
+      | Password: 
+      input#exampleInputPassword1.form-control(type='password' name='password')
+    .mb-3
+      | Gender:         
+      label.form-check-label(for='lexRadioDefault2')
+        input#flexRadioDefault.form-check-input(type='radio' name='gender' value='f' checked) 
+        | 女
+      label.form-check-label(for='lexRadioDefault1')
+        input#flexRadioDefault.form-check-input(type='radio' name='gender' value='m' ) 
+        | 男
+
+    .mb-3.form-check 
+      input#exampleCheck1.form-check-input(type='checkbox')
+      label.form-check-label(for='exampleCheck1') Check me out
+    button.btn.btn-primary(type='submit') Submit
+
+
