@@ -1,7 +1,12 @@
 extends basic-layout.pug 
 
 block content
-  form(action='register' method='post')
+  form(action="/register" method="POST")
+    .mb-3 
+      label.form-label(for="userName") 
+      | User Name:
+      input#userName.form-control(type='text' name='name' )
+
     .mb-3 
       label.form-label(for="exampleInputEmail1") 
       | Email address:

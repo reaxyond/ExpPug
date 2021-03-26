@@ -118,9 +118,9 @@ app.set('views', path.join(__dirname, 'templates'))
 res.render('index.pug', {posts: posts})
 
 extends basic.pug 
-
+//引入基本样式
 block content 
-
+//替换内容
   ul 
       each post in posts 
         li 
@@ -140,6 +140,58 @@ block content
 
   link(rel='stylesheet', href='/bootstrap.min.css)
   app.use(express.static(path.join(__dirname, 'static')))
+  //模板会在‘static’文件夹下寻找
+
+
+
+  //mysql
+  
+  mysql -uroot -p
+  // cmd 打开MySql命令行终端
+  
+  
+  alter user 'root'@'localhost' identified with mysql_native_password by 'mysql1234';
+  //node连接Mysql报错：Error: ER_NOT_SUPPORTED_AUTH_MODE: Client does not support authentication
+
+
+//Error: Cannot enqueue Query after invoking quit.
+
+
+//Error: WARN_DATA_TRUNCATED: Data truncated for column 'createAt' at row 1
+
+
+删除bootstrap.min.css文件内容最后一行     /*# sourceMappingURL=bootstrap.min.css.map */   
+//Could not load content for http://localhost:8080/bootstrap.min.css.map:
+
+
+//req.params.id 只能在post/:id 页面内使用，跳转到/comment无法读取
+通过保存在form的value内，post再通过req.body读取属性值；
+也可以保存在cookie内，比如req.signedCookies.loginUser,
+
+
+
+onnection.query(`SELECT * FROM users WHERE email = ?`,req.signedCookies.loginUser, (err, data) => {
+    if (data) {
+      req.user = data[0]
+    }
+    // console.log('--data of req.user--only one--', data)
+    console.log('--line 41--req.user----', req.user)
+    next()
+  })
+
+//在回调的时候执行next（）
+
+
+let dataPostId = data.insertId
+//插入并返回对应的id
+
+
+
+
+
+
+
+
 
 
 

@@ -8,6 +8,8 @@ block content
     each comment in comments 
       li= comment.content 
         small= new Date(comment.createAt).toString()
+    else 
+      li 暂时没有人发表评论
 
   if isLogin
     form(action="/comment" method='POST')

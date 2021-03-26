@@ -1,7 +1,10 @@
 extends basic-layout.pug 
 
 block content
+  a.float-end(href = "/add-post") Add a post here
   ul 
     each post in posts 
       li 
         a(href="/post/" + post.id)= post.title
+    else 
+      p 暂时没有帖子

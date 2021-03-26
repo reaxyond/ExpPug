@@ -1,0 +1,17 @@
+extends basic-layout.pug 
+
+block content
+  h2 Add Post
+  form(action="/add-post" method="POST")
+    .mb-3 
+      label.form-label(for="post-title") 
+      | Post Title:
+      input#post-title.form-control(type='text' name='title')
+    .mb-3
+      label.form-label(for="post-content") 
+      | Post Content:
+      textarea#post-content.form-control(name='content')
+ 
+    button.btn.btn-primary(type='submit') Submit
+
+

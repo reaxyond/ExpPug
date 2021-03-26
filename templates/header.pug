@@ -1,7 +1,14 @@
-h1: a(href = "/") BBS
-if isLogin 
-  a(href = "/logout?next=" + url) 登出
-else
-  a(href= "/login") 登录
-  a(href = "/register") 注册
+nav.navbar.navbar-expand.navbar-light.bg-light 
+  .container-fluid 
+    a.navbar-brand(href='/') BBS
+    .collapse.navbar-collapse.flex-row-reverse
+      ul.navbar-nav.float-end
+        if isLogin 
+          li.nav-item
+            a.nav-link(href = "/logout?next=" + url) 登出
+        else
+          li.nav-item
+            a(href= "/login") 登录
+          li.nav-item
+            a(href = "/register") 注册
 

@@ -9,3 +9,7 @@
 1. 更正register的判断错误
 2. 将register  login  post 模板替换
 3. 引用bootstrap
+
+## third version
+1. mysql 查找和插入数据
+2. 增加add-post
