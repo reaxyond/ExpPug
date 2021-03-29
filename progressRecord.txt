@@ -190,6 +190,79 @@ let dataPostId = data.insertId
 
 
 
+//captcha 验证码
+
+ img(src="/captcha", alt="captcha") 
+ //加载登录页面时访问img来源/captcha，通过app.get('/captcha') 在form表单内引入图片
+
+
+
+
+
+ //session
+ Math.random().toString().slice(2)
+ //0到1之间的小数，转字符串， 去掉小数点之前的
+
+
+ req.cookies.sessionId
+ // sessionId保存在用户的cookie中，在发送请求消息时携带
+
+ req.session
+ //其值取自全局sessionMap中的， 对应req.cookies.sessionId的值
+
+ req.session.captcha = obj.text
+//obj 是svgCaptcha.create 返回的验证码
+
+ loginBody.captcha
+//用户输入的验证码，post发送的数据 由req body携带
+
+
+
+const sessionMiddleware = require('./session-middleware.js')
+app.use(sessionMiddleware(sessionMap))
+//把中间件函数， 通过module exports 导出
+
+
+
+
+//avatar
+form(action="/register" method="POST" enctype='multipart/form-data')
+
+const formidable = require('formidable')
+const form = formidable({
+  multiples: true,
+  keepExtensions: true,
+  uploadDir: path.join(__dirname, 'upload')
+})
+form.parse(req, (err, fields, files)
+
+//通过formidable 无法获得post body， 需要从回调的字段中读取，比如fields.name
+
+path.basename(files.avatar.path)
+//获取文件名及其类型
+
+
+SELECT users.email, users.avatar, comments.* 
+      FROM users RIGHT JOIN comments  
+      ON users.id = comments.userId
+      WHERE comments.postId = '${currentPost.id}
+//同时获取user的头像邮箱 和评论
+
+app.use('/upload', express.static(path.join(__dirname, 'upload')))
+// 从/upload中获取用户上传的头像
+
+
+
+
+//salt
+md5(mad5(fields.password) + md5(salt))
+
+
+
+
+
+
+
 
 
 

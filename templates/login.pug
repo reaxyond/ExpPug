@@ -1,15 +1,24 @@
 extends basic-layout.pug 
 
 block content 
-  h1 登录
+  h1 登录 
   form(action = "/login" method="post")
+    input(type="hidden" name="preRef", value= preRef) 
     .mb-3 
       label.form-label(for="exampleInputEmail1") 
-      | Email address:
+      | Email address : 
       input#exampleInputEmail1.form-control(type='email' name='email' aria-describedby='emailHelp')
       #emailHelp.form-text We will never share your email with anyone else.
-    .mb-3
+    .mb-3 
       label.form-label(for='exampleInputPassword1')
-      | Password: 
+      | Password:  
       input#exampleInputPassword1.form-control(type='password' name='password')
-    button 登录
+    .mb-3
+      label.form-label(for='captcha')
+      | Captcha: 
+      div.input-group
+        span.input-group-text
+          img(src="/captcha", alt="captcha") 
+        input#captcha.form-control(type='text' name='captcha')
+
+    button.btn.btn-primary(type="submit") 登录

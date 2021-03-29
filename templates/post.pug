@@ -4,12 +4,20 @@ block content
   h2= post.title
   p= post.content
 
-  ul
+  div
     each comment in comments 
-      li= comment.content 
-        small= new Date(comment.createAt).toString()
+      div.row-mb-3.row
+        span.col.flex-grow-0.flex-shrink-0.rounded
+          a(href="/user/" + comment.userId): img(width="50"  height="50" src="/upload/" + comment.avatar)
+        div.col
+          p= comment.content 
+          span posted by #[a(href="/user/" + comment.userId) #{comment.email}] 
+          small= comment.createAt
+      hr
     else 
-      li 暂时没有人发表评论
+      div.row.mb-3 暂时没有人发表评论
+      hr
+  
 
   if isLogin
     form(action="/comment" method='POST')
